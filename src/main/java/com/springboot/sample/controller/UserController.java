@@ -8,13 +8,10 @@ import javax.annotation.Resource;
 
 @RestController
 public class UserController {
-
     @Resource
     private UserService userService;
-
-
     @RequestMapping("/findUserPageList")
     public Object findUserPageList(){
-        return userService.findUserPageList();
+        return userService.findUserPageList2();
     }
 }

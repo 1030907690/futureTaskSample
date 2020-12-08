@@ -10,6 +10,7 @@ import java.util.concurrent.*;
 
 @Service
 public class UserService {
+    // CPU核数
     private final int processors = Runtime.getRuntime().availableProcessors();
     private final ExecutorService executorService = new ThreadPoolExecutor(processors * 2, processors * 10, 60L, TimeUnit.SECONDS, new ArrayBlockingQueue(processors * 100), Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
 
@@ -52,7 +53,7 @@ public class UserService {
         long endTime = System.currentTimeMillis();
         // 相差时间，耗时
         long diffTime = endTime - startTime;
-        System.out.println("总共耗时：" + diffTime);
+        System.out.println("总共耗时：" + diffTime+"毫秒");
         return null;
     }
 
@@ -77,8 +78,11 @@ public class UserService {
         };
         FutureTask<List> userDataFuture = new FutureTask(userDataFutureCallable);
         // 使用子线程执行
-        new Thread(userCountFuture).start();
+        /*new Thread(userCountFuture).start();
         new Thread(userDataFuture).start();
+*/
+        executorService.execute(userCountFuture);
+        executorService.execute(userDataFuture);
 
         Integer userCount = 0;
         try {
@@ -101,7 +105,7 @@ public class UserService {
         long endTime = System.currentTimeMillis();
         // 相差时间，耗时
         long diffTime = endTime - startTime;
-        System.out.println("总共耗时：" + diffTime);
+        System.out.println("总共耗时：" + diffTime+"毫秒");
         return null;
     }
 
@@ -150,7 +154,7 @@ public class UserService {
         long endTime = System.currentTimeMillis();
         // 相差时间，耗时
         long diffTime = endTime - startTime;
-        System.out.println("总共耗时：" + diffTime);
+        System.out.println("总共耗时：" + diffTime+"毫秒");
         return null;
     }
 
